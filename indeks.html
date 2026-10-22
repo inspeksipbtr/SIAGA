@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PBTR K3 Digital Inspection</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #172033;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, #071b3a, #123b6d);
+            color: white;
+            padding: 25px 20px 35px;
+            text-align: center;
+            border-radius: 0 0 25px 25px;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            background: white;
+            border-radius: 20px;
+            padding: 8px;
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin-bottom: 7px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 600px;
+            margin: -15px auto 0;
+            padding: 0 18px 30px;
+        }
+
+        /* WELCOME */
+        .welcome {
+            background: white;
+            padding: 20px;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .welcome h2 {
+            font-size: 19px;
+            margin-bottom: 8px;
+            color: #0b315d;
+        }
+
+        .welcome p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #667085;
+        }
+
+        /* SECTION */
+        .section-title {
+            font-size: 17px;
+            font-weight: bold;
+            margin: 22px 0 12px;
+            color: #102a43;
+        }
+
+        /* MENU */
+        .menu {
+            display: grid;
+            gap: 14px;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 18px;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .menu-card:active {
+            transform: scale(0.98);
+        }
+
+        .icon {
+            min-width: 55px;
+            height: 55px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+        }
+
+        .apar-icon {
+            background: #fff0ed;
+        }
+
+        .p3k-icon {
+            background: #edf6ff;
+        }
+
+        .dashboard-icon {
+            background: #fff8dc;
+        }
+
+        .menu-content h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .menu-content p {
+            font-size: 12px;
+            color: #7b8794;
+            line-height: 1.4;
+        }
+
+        .arrow {
+            margin-left: auto;
+            font-size: 20px;
+            color: #9aa5b1;
+        }
+
+        /* INFO */
+        .info-box {
+            background: #fff8dc;
+            border-left: 5px solid #f4c400;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .info-box h3 {
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .info-box p {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #5f6368;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            color: #8a94a6;
+            font-size: 11px;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            z-index: 100;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 25px 25px 0 0;
+            padding: 25px;
+            animation: slideUp 0.25s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .modal-content h2 {
+            color: #0b315d;
+            margin-bottom: 10px;
+        }
+
+        .modal-content p {
+            color: #667085;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            background: #0b315d;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+
+        .button.yellow {
+            background: #f4c400;
+            color: #172033;
+        }
+
+        .close {
+            background: #eef1f5;
+            color: #172033;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <!--
+    GANTI LINK LOGO DI BAWAH INI
+    dengan file/logo PBTR milik kamu.
+    -->
+    <img 
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/No_Image_Available.jpg/640px-No_Image_Available.jpg"
+        class="logo"
+        alt="Logo PBTR"
+    >
+
+    <h1>PBTR K3 Digital</h1>
+    <p>Digital Inspection APAR & P3K</p>
+
+</header>
+
+
+<div class="container">
+
+    <div class="welcome">
+
+        <h2>Halo, Sobat K3 👋</h2>
+
+        <p>
+            Selamat datang di sistem digital pemeriksaan
+            APAR dan P3K PT Pemalang Batang Toll Road.
+            Pilih menu yang ingin digunakan untuk melakukan
+            pemeriksaan.
+        </p>
+
+    </div>
+
+
+    <div class="section-title">
+        Menu Pemeriksaan
+    </div>
+
+
+    <div class="menu">
+
+        <!-- APAR -->
+        <div class="menu-card" onclick="openModal('apar')">
+
+            <div class="icon apar-icon">
+                🔥
+            </div>
+
+            <div class="menu-content">
+
+                <h3>Pemeriksaan APAR</h3>
+
+                <p>
+                    Pemeriksaan kondisi, kelengkapan,
+                    masa berlaku dan temuan APAR.
+                </p>
+
+            </div>
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </div>
+
+
+        <!-- P3K -->
+        <div class="menu-card" onclick="openModal('p3k')">
+
+            <div class="icon p3k-icon">
+                🩹
+            </div>
+
+            <div class="menu-content">
+
+                <h3>Pemeriksaan P3K</h3>
+
+                <p>
+                    Pemeriksaan kondisi kotak dan
+                    kelengkapan isi P3K.
+                </p>
+
+            </div>
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </div>
+
+
+        <!-- DASHBOARD -->
+        <div class="menu-card" onclick="openModal('dashboard')">
+
+            <div class="icon dashboard-icon">
+                📊
+            </div>
+
+            <div class="menu-content">
+
+                <h3>Dashboard Pemeriksaan</h3>
+
+                <p>
+                    Lihat rekap dan status pemeriksaan
+                    APAR serta P3K.
+                </p>
+
+            </div>
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="info-box">
+
+        <h3>💡 Pengingat K3</h3>
+
+        <p>
+            Pastikan pemeriksaan dilakukan secara berkala
+            dan setiap temuan dicatat serta ditindaklanjuti.
+        </p>
+
+    </div>
+
+</div>
+
+
+<footer>
+
+    PBTR K3 Digital Inspection<br>
+    PT Pemalang Batang Toll Road
+
+</footer>
+
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-content">
+
+        <h2 id="modalTitle">
+            Menu
+        </h2>
+
+        <p id="modalDescription">
+            Pilih tindakan.
+        </p>
+
+        <a
+            href="#"
+            id="formButton"
+            class="button yellow"
+            target="_blank"
+        >
+            Buka Form Pemeriksaan
+        </a>
+
+        <button
+            class="button close"
+            onclick="closeModal()"
+        >
+            Tutup
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /*
+    =================================================
+    LINK FORM
+    =================================================
+    */
+
+    const APAR_FORM =
+        "https://forms.gle/BNKc5L8e5U8XppVB9";
+
+
+    const P3K_FORM =
+        "https://docs.google.com/forms/d/e/1FAIpQLSc4J2mqYpeySuvliRv05H9hOBEmQCORi13mPqYHxDufoA4cyQ/viewform?usp=header";
+
+
+    function openModal(type) {
+
+        const modal =
+            document.getElementById("modal");
+
+        const title =
+            document.getElementById("modalTitle");
+
+        const description =
+            document.getElementById("modalDescription");
+
+        const button =
+            document.getElementById("formButton");
+
+
+        modal.style.display = "flex";
+
+
+        if (type === "apar") {
+
+            title.innerHTML =
+                "🔥 Pemeriksaan APAR";
+
+            description.innerHTML =
+                "Silakan lakukan pemeriksaan APAR " +
+                "sesuai lokasi yang ditentukan. " +
+                "Pastikan kondisi, kelengkapan, " +
+                "dan masa berlaku APAR diperiksa.";
+
+            button.href = APAR_FORM;
+
+        }
+
+
+        else if (type === "p3k") {
+
+            title.innerHTML =
+                "🩹 Pemeriksaan P3K";
+
+            description.innerHTML =
+                "Lakukan pemeriksaan kondisi kotak P3K " +
+                "dan kelengkapan setiap item sesuai " +
+                "kebutuhan lokasi.";
+
+            button.href = P3K_FORM;
+
+        }
+
+
+        else if (type === "dashboard") {
+
+            title.innerHTML =
+                "📊 Dashboard Pemeriksaan";
+
+            description.innerHTML =
+                "Dashboard rekap pemeriksaan akan " +
+                "dikembangkan untuk menampilkan status " +
+                "APAR dan P3K berdasarkan lokasi.";
+
+            button.innerHTML =
+                "Dashboard Segera Hadir";
+
+            button.removeAttribute("href");
+
+        }
+
+    }
+
+
+    function closeModal() {
+
+        document.getElementById("modal").style.display =
+            "none";
+
+    }
+
+
+    window.onclick = function(event) {
+
+        const modal =
+            document.getElementById("modal");
+
+        if (event.target === modal) {
+
+            closeModal();
+
+        }
+
+    }
+
+</script>
+
+</body>
+</html>
